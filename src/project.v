@@ -1,40 +1,28 @@
 `default_nettype none
 
 module tt_um_dev_makwana_alu8 (
-    input  wire [7:0] ui_in,    
-    output wire [7:0] uo_out,   
-    input  wire [7:0] uio_in,   
-    output wire [7:0] uio_out,  
-    output wire [7:0] uio_oe,   
-    input  wire       ena,      
-    input  wire       clk,      
-    input  wire       rst_n     
+    input  wire [7:0] ui_in,    // Dedicated inputs (Operand A)
+    output wire [7:0] uo_out,   // Dedicated outputs (Result)
+    input  wire [7:0] uio_in,   // IOs: Input path (Operand B & Opcode)
+    output wire [7:0] uio_out,  // IOs: Output path
+    output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
+    input  wire       ena,      // always 1 when the design is powered
+    input  wire       clk,      // clock
+    input  wire       rst_n     // reset_n - low to reset
 );
 
-    wire [7:0] a_in;
-    wire [7:0] b_in;
-    wire [2:0] opcode_in;
-    wire [7:0] result_out;
-    wire carry_out;
-    wire zero_out;
+    assign uio_oe  = 8'b0000_0000;
+    assign uio_out = 8'b0000_0000;
 
-    assign a_in      = ui_in;
-    assign b_in      = uio_in[7:0];
-    assign opcode_in = 3'b000; 
+    wire [7:0] a = ui_in;
+    wire [7:0] b = {4'b0000, uio_in[3:0]}; 
+    wire [2:0] opcode = uio_in[7:5];
 
-    alu8 u_alu8 (
-        .a(a_in),
-        .b(b_in),
-        .opcode(opcode_in),
-        .out(result_out),
-        .carry(carry_out),
-        .zero(zero_out)
+    alu8 my_alu (
+        .a(a),
+        .b(b),
+        .opcode(opcode),
+        .result(uo_out)
     );
-
-    assign uo_out = result_out;
-    assign uio_out = 8'b0;
-    assign uio_oe  = 8'b0; 
-
-    wire _unused = &{ena, clk, rst_n, carry_out, zero_out, 1'b0};
 
 endmodule

@@ -18,16 +18,12 @@ async def test_alu(dut):
     await ClockCycles(dut.clk, 2)
 
     # Test ADD: 20 + 10 = 30
-    # a = 20
-    # b = 10, opcode = 000 (ADD). uio_in = (0 << 5) | 10 = 10
     dut.ui_in.value = 20
     dut.uio_in.value = 10 
     await ClockCycles(dut.clk, 1)
     assert int(dut.uo_out.value) == 30, f"ADD Failed: Expected 30, got {int(dut.uo_out.value)}"
 
     # Test SUB: 20 - 5 = 15
-    # a = 20
-    # b = 5, opcode = 001 (SUB). uio_in = (1 << 5) | 5 = 32 + 5 = 37
     dut.ui_in.value = 20
     dut.uio_in.value = 37
     await ClockCycles(dut.clk, 1)

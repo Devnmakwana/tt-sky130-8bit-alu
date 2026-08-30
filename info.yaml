@@ -1,10 +1,42 @@
-yaml_version: 4
+yaml_version: 6
 
 project:
   title: "8-bit Arithmetic Logic Unit (ALU)"
   author: "Dev Makwana"
   github_repo: "tt-sky130-8bit-alu" 
   top_module: "tt_um_dev_makwana_alu8"
+  language: "Verilog"
+  clock_hz: 10000000
+  tiles: "1x1"
+  description: "8-bit Arithmetic Logic Unit (ALU) supporting basic operations"
   source_files:
     - "project.v"
     - "alu8.v"
+
+pinout:
+  ui[0]: "a[0]"
+  ui[1]: "a[1]"
+  ui[2]: "a[2]"
+  ui[3]: "a[3]"
+  ui[4]: "a[4]"
+  ui[5]: "a[5]"
+  ui[6]: "a[6]"
+  ui[7]: "a[7]"
+  uo[0]: "out[0]"
+  uo[1]: "out[1]"
+  uo[2]: "out[2]"
+  uo[3]: "out[3]"
+  uo[4]: "out[4]"
+  uo[5]: "out[5]"
+  uo[6]: "out[6]"
+  uo[7]: "out[7]"
+  uio[0]: "b[0]"
+  uio[1]: "b[1]"
+  uio[2]: "b[2]"
+  uio[3]: "b[3]"
+  uio[4]: "b[4]"
+  uio[5]: "b[5]"
+  uio[6]: "b[6]"
+  uio[7]: "b[7]"
+
+netlist_tautology: false
